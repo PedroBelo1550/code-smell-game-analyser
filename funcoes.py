@@ -2,24 +2,31 @@
 
 import csv
 import json
+import os
+import shutil
 import subprocess
 import sys
 import tempfile
+import zipfile
 import git
 import pandas as pd
 
 class Funcoes:
 
     @staticmethod
-    def clona_repositorio(url, destino):
-        git.Repo.clone_from(url, destino)
+    def clona_repositorio(url):
+        print('Clonando o repositório')
+        git.Repo.clone_from(url, 'repositorio/')
+        print('Finalizou a clonagem')
 
     @staticmethod
     def cria_pasta_temporaria():
         return tempfile.mkdtemp()
     
-    def executar_analisador_csharp(project_dir_path):
+    def executar_analisador_csharp():
         try:
+ 
+            project_dir_path = 'repositorio/'
             print('Iniciou a análise do CSharpAnalyzer')
             # Comando para executar o analisador C# de acordo com o sistema operacional
             if sys.platform.startswith('win'):
@@ -50,28 +57,24 @@ class Funcoes:
             print("Erro ao executar o analisador C#:", e)
 
     def json_para_csv(json_path):
-        arquivo_temporario = tempfile.NamedTemporaryFile(delete=False, suffix='.csv').name
-        # Abre o arquivo CSV para escrita
-        with open(arquivo_temporario, 'w', newline='') as csvfile:
-            # Define os campos do CSV
-            fieldnames = ['name', 'script', 'metodo', 'line']
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
-            # Escreve o cabeçalho
-            writer.writeheader()
+        temp = tempfile.NamedTemporaryFile(suffix='.zip').name
 
-            # Itera sobre os dados do JSON
+        caminho_downloads = os.path.join(os.path.expanduser('~'), 'Downloads')
+        
+        with zipfile.ZipFile(temp, 'w') as zipf:
+            
             for smell in pd.read_json(json_path)['SmellList']: 
-                    
-                name = smell['Name']
 
-                for s in smell['Smells']:
-                    script = s['Script']
-                    line = s['Line']
+                if smell['Occurrency'] != 0:
+                    nome = smell['Name']
+                    df = pd.DataFrame(smell['Smells'])
+                    name = f'{nome}.csv'
+                    df.to_csv(name)
+                    zipf.write(name)
 
-                    # Escreve os dados no arquivo CSV
-                    writer.writerow({'name': name, 'script': script, 'line': line})
+        shutil.move(temp, caminho_downloads)
 
-        return arquivo_temporario
+        return True
 
 

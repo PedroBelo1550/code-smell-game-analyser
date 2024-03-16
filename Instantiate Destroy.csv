@@ -1,0 +1,3 @@
+,Script,Name,Invocation,Line
+0,repositorio/Assets/scripts/AutoDestroyParticle.cs,Destroy,Destroy,14
+1,repositorio/Assets/AstarPathfindingProject/ExampleScenes/Example12_Procedural/ProceduralWorld.cs,Destroy,ProceduralWorld.ProceduralTile.Destroy(),78

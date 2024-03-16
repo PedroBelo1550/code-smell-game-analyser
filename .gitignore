@@ -19,3 +19,4 @@ pip-log.txt
 
 CodeAnalysys.json
 codeSmells.json
+*.pyc
