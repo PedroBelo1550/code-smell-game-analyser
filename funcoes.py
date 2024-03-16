@@ -11,9 +11,27 @@ class Funcoes:
 
     @staticmethod
     def clona_repositorio(url):
-        print('Clonando o repositório')
-        git.Repo.clone_from(url, 'repositorio/')
-        print('Finalizou a clonagem')
+
+        destino = 'repositorio'
+
+        if os.path.exists(url):
+           print('Copiando pasta')
+           shutil.copytree(url,destino)
+        else:
+            os.makedirs(destino)
+            print('Clonando o repositório')
+            git.Repo.clone_from(url, destino)
+            print('Finalizou a clonagem')
+
+    @staticmethod
+    def remove_arq(path):
+        if os.path.exists(path):
+            os.remove(path)
+
+    @staticmethod
+    def remove_folder(path):
+            shutil.rmtree(path)
+        
 
     @staticmethod
     def cria_pasta_temporaria():
@@ -22,7 +40,7 @@ class Funcoes:
     def executar_analisador_csharp():
         try:
  
-            project_dir_path = 'repositorio/'
+            project_dir_path = 'repositorio'
             print('Iniciou a análise do CSharpAnalyzer')
             # Comando para executar o analisador C# de acordo com o sistema operacional
             if sys.platform.startswith('win'):
@@ -54,7 +72,7 @@ class Funcoes:
 
     def json_para_csv(json_path, name_repo):
 
-        name_repo = 'Resultados code smells: ' + name_repo + '.zip'
+        name_repo = 'Resultados code smells - ' + name_repo + '.zip'
 
         pasta_temporaria = 'temporaria'
         if os.path.exists(pasta_temporaria):
@@ -82,7 +100,7 @@ class Funcoes:
     
     def get_repo_name(repo_url: str):
         name_repo = repo_url.split('/')
-        name_repo = name_repo[len(name_repo)-1].replace('.git', '')
+        name_repo = name_repo[len(name_repo)-1].replace('.git', '').replace('/', '')
         return name_repo
 
 

@@ -6,30 +6,17 @@ class Analyser:
 
 
     def processar(url):
-        projeto_path = Funcoes.cria_pasta_temporaria()
         repositorio_git = url
         json_output = 'CodeAnalysis.json'
         json_smell = 'codeSmells.json'
         repositorio_path = 'repositorio'
         log= 'CSharpAnalyzer.log'
 
-        #Limpa a pasta antes de começar.
-        if os.path.exists(repositorio_path):
-            # Deletar o repositório existente
-            shutil.rmtree(repositorio_path)
-
-        #Deleta arquivos temporarios
-        if os.path.exists(json_output):
-            os.remove(json_output)
-
-        if os.path.exists(json_smell):
-            os.remove(json_smell)
+        Funcoes.remove_folder(repositorio_path)
+        Funcoes.remove_arq(json_output)
+        Funcoes.remove_arq(json_smell)
+        Funcoes.remove_arq(log)
         
-        if os.path.exists(json_smell):
-            os.remove(log)
-
-        os.makedirs(repositorio_path)
-
         name_repo = Funcoes.get_repo_name(repositorio_git)
 
         #Clona o repositório: 

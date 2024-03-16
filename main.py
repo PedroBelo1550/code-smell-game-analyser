@@ -1,16 +1,22 @@
 import tkinter as tk
 from tkinter import messagebox
+import threading
 
 from analyser import Analyser
 
 def processar():
     entrada = entrada_url.get()
 
+    # Criar uma nova thread para processar os dados
+    thread = threading.Thread(target=processar_analise, args=(entrada,))
+    thread.start()
+
+def processar_analise(entrada):
     print(entrada)
     Analyser.processar(entrada)
 
     # Aqui você pode processar a URL ou o caminho inserido
-    messagebox.showinfo("Processado", f"URL ou caminho inserido: {entrada}, os dados estão disponíveis na pasta de download")
+    messagebox.showinfo("Processado", f"Os dados estão disponíveis na pasta de download")
 
 # Criar janela
 janela = tk.Tk()
