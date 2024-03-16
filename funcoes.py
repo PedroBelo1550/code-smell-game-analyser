@@ -80,9 +80,10 @@ class Funcoes:
 
         return True
     
-    def get_repo_name(repo_url):
+    def get_repo_name(repo_url: str):
         name_repo = repo_url.split('/')
         name_repo = name_repo[len(name_repo)-1].replace('.git', '')
+        return name_repo
 
 
 

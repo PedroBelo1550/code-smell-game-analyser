@@ -1,38 +1,30 @@
-import os
-import shutil
-from funcoes import Funcoes
+import tkinter as tk
+from tkinter import messagebox
 
-projeto_path = Funcoes.cria_pasta_temporaria()
-repositorio_git = 'https://github.com/coconauts/startcraft-unity3d.git'
-json_output = 'CodeAnalysis.json'
-json_smell = 'codeSmells.json'
-repositorio_path = 'repositorio'
+from analyser import Analyser
 
-#Limpa a pasta antes de começar.
-if os.path.exists(repositorio_path):
-    # Deletar o repositório existente
-    shutil.rmtree(repositorio_path)
+def processar():
+    entrada = entrada_url.get()
 
-#Deleta arquivos temporarios
-os.remove(json_output)
-os.remove(json_smell)
-os.remove('CSharpAnalyzer.log')
+    print(entrada)
+    Analyser.processar(entrada)
 
-os.makedirs(repositorio_path)
+    # Aqui você pode processar a URL ou o caminho inserido
+    messagebox.showinfo("Processado", f"URL ou caminho inserido: {entrada}, os dados estão disponíveis na pasta de download")
 
-name_repo = Funcoes.get_repo_name(repositorio_git)
+# Criar janela
+janela = tk.Tk()
+janela.title("Code smell analyser")
 
-#Clona o repositório: 
-Funcoes.clona_repositorio(repositorio_git)
+# Campo de entrada
+label_url = tk.Label(janela, text="URL Git ou caminho:")
+label_url.pack(pady=(10, 0))
+entrada_url = tk.Entry(janela, width=50)
+entrada_url.pack(pady=(0, 10))
 
-#Roda o CSharpAnalyzer, necesária para obter os bad smells. 
-Funcoes.executar_analisador_csharp()
-Funcoes.executar_analisador_code_smell(json_output)
-Funcoes.json_para_csv(json_smell,name_repo)
-print('Finalizou')
+# Botão de processar
+botao_processar = tk.Button(janela, text="Processar", command=processar)
+botao_processar.pack()
 
-
-
-
-
-
+# Executar janela
+janela.mainloop()
