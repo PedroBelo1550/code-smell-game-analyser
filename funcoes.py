@@ -56,20 +56,25 @@ class Funcoes:
         except subprocess.CalledProcessError as e:
             print("Erro ao executar o analisador C#:", e)
 
-    def json_para_csv(json_path):
+    def json_para_csv(json_path, name_repo):
 
-        temp = tempfile.NamedTemporaryFile(suffix='.zip').name
+        pasta_temporaria = 'temporaria'
+        if os.path.exists(pasta_temporaria):
+            # Deletar o repositório existente
+            shutil.rmtree(pasta_temporaria)
+
+        os.makedirs(pasta_temporaria)
 
         caminho_downloads = os.path.join(os.path.expanduser('~'), 'Downloads')
         
-        with zipfile.ZipFile(temp, 'w') as zipf:
+        with zipfile.ZipFile(name_repo, 'w') as zipf:
             
             for smell in pd.read_json(json_path)['SmellList']: 
 
                 if smell['Occurrency'] != 0:
                     nome = smell['Name']
                     df = pd.DataFrame(smell['Smells'])
-                    name = f'{nome}.csv'
+                    name = f'/{pasta_temporaria}/{nome}.csv'
                     df.to_csv(name)
                     zipf.write(name)
 
