@@ -1,0 +1,21 @@
+# Arquivos de compilação Python
+*.pyc
+*.pyo
+__pycache__/
+
+# Arquivos gerados por IDEs ou editores
+.idea/
+.vscode/
+
+# Arquivo de ambiente virtual (se estiver usando virtualenv ou venv)
+venv/
+env/
+
+# Arquivos de registro
+*.log
+
+# Pacotes instalados
+pip-log.txt
+
+CodeAnalysys.json
+codeSmells.json
