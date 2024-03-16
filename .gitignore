@@ -2,6 +2,7 @@
 *.pyc
 *.pyo
 __pycache__/
+.pyc
 
 # Arquivos gerados por IDEs ou editores
 .idea/

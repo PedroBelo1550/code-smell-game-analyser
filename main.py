@@ -8,14 +8,19 @@ json_output = 'CodeAnalysis.json'
 json_smell = 'codeSmells.json'
 repositorio_path = 'repositorio'
 
+#Limpa a pasta antes de começar.
 if os.path.exists(repositorio_path):
     # Deletar o repositório existente
     shutil.rmtree(repositorio_path)
 
+#Deleta arquivos temporarios
+os.remove(json_output)
+os.remove(json_smell)
+os.remove('CSharpAnalyzer.log')
+
 os.makedirs(repositorio_path)
 
-name_repo = repositorio_git.split('/')
-name_repo = name_repo[len(name_repo)-1].replace('.git', '')
+name_repo = Funcoes.get_repo_name(repositorio_git)
 
 #Clona o repositório: 
 Funcoes.clona_repositorio(repositorio_git)

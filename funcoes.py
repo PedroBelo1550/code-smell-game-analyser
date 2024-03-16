@@ -58,7 +58,7 @@ class Funcoes:
 
     def json_para_csv(json_path, name_repo):
 
-        name_repo = name_repo + '.zip'
+        name_repo = 'Resultados code smells: ' + name_repo + '.zip'
 
         pasta_temporaria = 'temporaria'
         if os.path.exists(pasta_temporaria):
@@ -83,5 +83,10 @@ class Funcoes:
         shutil.move(name_repo, caminho_downloads)
 
         return True
+    
+    def get_repo_name(repo_url):
+        name_repo = repo_url.split('/')
+        name_repo = name_repo[len(name_repo)-1].replace('.git', '')
+
 
 
