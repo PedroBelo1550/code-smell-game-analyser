@@ -58,6 +58,8 @@ class Funcoes:
 
     def json_para_csv(json_path, name_repo):
 
+        name_repo = name_repo + '.zip'
+
         pasta_temporaria = 'temporaria'
         if os.path.exists(pasta_temporaria):
             # Deletar o repositório existente
@@ -74,11 +76,11 @@ class Funcoes:
                 if smell['Occurrency'] != 0:
                     nome = smell['Name']
                     df = pd.DataFrame(smell['Smells'])
-                    name = f'/{pasta_temporaria}/{nome}.csv'
+                    name = f'{pasta_temporaria}/{nome}.csv'
                     df.to_csv(name)
                     zipf.write(name)
 
-        shutil.move(temp, caminho_downloads)
+        shutil.move(name_repo, caminho_downloads)
 
         return True
 

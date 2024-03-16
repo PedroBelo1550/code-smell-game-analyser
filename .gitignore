@@ -22,3 +22,4 @@ codeSmells.json
 *.pyc
 CodeAnalysis.json
 __pycache__/funcoes.cpython-310.pyc
+temporaria/
