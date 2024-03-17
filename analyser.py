@@ -17,6 +17,8 @@ class Analyser:
         
         name_repo = Funcoes.get_repo_name(repositorio_git)
 
+        print(name_repo)
+
         #Clona o repositório: 
         Funcoes.clona_repositorio(repositorio_git)
 

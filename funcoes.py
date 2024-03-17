@@ -79,7 +79,7 @@ class Funcoes:
     @staticmethod
     def json_para_csv(json_path, name_repo):
 
-        name_repo = Funcoes.get_data_path('Resultados code smells - ' + name_repo + '.zip')
+        name_repo = 'Resultados code smells - ' + name_repo + '.zip'
 
         pasta_temporaria = Funcoes.get_data_path('temporaria')
         if os.path.exists(pasta_temporaria):
@@ -116,8 +116,12 @@ class Funcoes:
 
     @staticmethod
     def get_repo_name(repo_url: str):
-        name_repo = repo_url.split('/')
-        name_repo = name_repo[len(name_repo)-1].replace('.git', '').replace('/', '')
+        c = '/'
+        if sys.platform.startswith('win'):
+            c = '\\'
+
+        name_repo = repo_url.split(c)
+        name_repo = name_repo[len(name_repo)-1].replace('.git', '').replace(c, '')
         return name_repo
 
 
