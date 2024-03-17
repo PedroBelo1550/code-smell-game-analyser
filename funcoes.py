@@ -12,7 +12,7 @@ class Funcoes:
     @staticmethod
     def clona_repositorio(url):
 
-        destino = 'repositorio'
+        destino = Funcoes.get_data_path('repositorio')
 
         if os.path.exists(url):
            print('Copiando pasta')
@@ -25,11 +25,13 @@ class Funcoes:
 
     @staticmethod
     def remove_arq(path):
+        path = Funcoes.get_data_path(path)
         if os.path.exists(path):
             os.remove(path)
 
     @staticmethod
     def remove_folder(path):
+        path = Funcoes.get_data_path(path)
         if os.path.exists(path):
             shutil.rmtree(path)
         
@@ -38,16 +40,17 @@ class Funcoes:
     def cria_pasta_temporaria():
         return tempfile.mkdtemp()
     
+    @staticmethod
     def executar_analisador_csharp():
         try:
  
-            project_dir_path = 'repositorio'
+            project_dir_path = Funcoes.get_data_path('repositorio')
             print('Iniciou a análise do CSharpAnalyzer')
             # Comando para executar o analisador C# de acordo com o sistema operacional
             if sys.platform.startswith('win'):
-                comando = ["UnityCodeSmellAnalyzer/CSharpAnalyzer/CSharpAnalyzer.exe", "-p", project_dir_path]
+                comando = [Funcoes.get_data_path("UnityCodeSmellAnalyzer/CSharpAnalyzer/CSharpAnalyzer.exe"), "-p", project_dir_path]
             else:
-                comando = ["mono", "UnityCodeSmellAnalyzer/CSharpAnalyzer/CSharpAnalyzer.exe", "-p", project_dir_path]
+                comando = ["mono", Funcoes.get_data_path("UnityCodeSmellAnalyzer/CSharpAnalyzer/CSharpAnalyzer.exe"), "-p", project_dir_path]
 
             # Executa o comando
             subprocess.run(comando, check=True)
@@ -55,15 +58,16 @@ class Funcoes:
         except subprocess.CalledProcessError as e:
             print("Erro ao executar o analisador C#:", e)
 
+    @staticmethod
     def executar_analisador_code_smell(json_path):
         try:
 
             print('Iniciou a análise de code smells')
             # Comando para executar o analisador C# de acordo com o sistema operacional
             if sys.platform.startswith('win'):
-                comando = ["UnityCodeSmellAnalyzer/CodeSmellAnalyzer/CodeSmellAnalyzer.exe", "-d", json_path]
+                comando = [Funcoes.get_data_path("UnityCodeSmellAnalyzer/CodeSmellAnalyzer/CodeSmellAnalyzer.exe"), "-d", json_path]
             else:
-                comando = ["mono", "UnityCodeSmellAnalyzer/CodeSmellAnalyzer/CodeSmellAnalyzer.exe", "-d", json_path]
+                comando = ["mono", Funcoes.get_data_path("UnityCodeSmellAnalyzer/CodeSmellAnalyzer/CodeSmellAnalyzer.exe"), "-d", json_path]
 
             # Executa o comando
             subprocess.run(comando, check=True)
@@ -71,11 +75,12 @@ class Funcoes:
         except subprocess.CalledProcessError as e:
             print("Erro ao executar o analisador C#:", e)
 
+    @staticmethod
     def json_para_csv(json_path, name_repo):
 
-        name_repo = 'Resultados code smells - ' + name_repo + '.zip'
+        name_repo = Funcoes.get_data_path('Resultados code smells - ' + name_repo + '.zip')
 
-        pasta_temporaria = 'temporaria'
+        pasta_temporaria = Funcoes.get_data_path('temporaria')
         if os.path.exists(pasta_temporaria):
             # Deletar o repositório existente
             shutil.rmtree(pasta_temporaria)
@@ -99,6 +104,16 @@ class Funcoes:
 
         return True
     
+    @staticmethod
+    def get_data_path(relative_path):
+        """Retorna o caminho para um arquivo ou diretório incluído no pacote."""
+        try:
+            base_path = sys._MEIPASS
+        except AttributeError:
+            base_path = os.path.abspath(".")
+        return os.path.join(base_path, relative_path)
+
+    @staticmethod
     def get_repo_name(repo_url: str):
         name_repo = repo_url.split('/')
         name_repo = name_repo[len(name_repo)-1].replace('.git', '').replace('/', '')
