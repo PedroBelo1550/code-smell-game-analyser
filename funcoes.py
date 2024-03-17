@@ -45,7 +45,8 @@ class Funcoes:
         try:
  
             project_dir_path = Funcoes.get_data_path('repositorio')
-            print('Iniciou a análise do CSharpAnalyzer')
+
+            print(f'Iniciou a análise do CSharpAnalyzer {project_dir_path}')
             # Comando para executar o analisador C# de acordo com o sistema operacional
             if sys.platform.startswith('win'):
                 comando = [Funcoes.get_data_path("UnityCodeSmellAnalyzer/CSharpAnalyzer/CSharpAnalyzer.exe"), "-p", project_dir_path]
