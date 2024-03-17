@@ -1,5 +1,3 @@
-import os
-import shutil
 from funcoes import Funcoes
 
 class Analyser:

@@ -4,7 +4,7 @@ import subprocess
 import sys
 import tempfile
 import zipfile
-import git
+from git import Repo
 import pandas as pd
 
 class Funcoes:
@@ -20,7 +20,7 @@ class Funcoes:
         else:
             os.makedirs(destino)
             print('Clonando o repositório')
-            git.Repo.clone_from(url, destino)
+            Repo.clone_from(url, destino)
             print('Finalizou a clonagem')
 
     @staticmethod
