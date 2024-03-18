@@ -106,6 +106,7 @@ class Funcoes:
 
         dest_path = os.path.join(caminho_downloads, name_repo)
         shutil.move(name_repo, dest_path)
+        shutil.rmtree(pasta_temporaria)
 
         return True
     
