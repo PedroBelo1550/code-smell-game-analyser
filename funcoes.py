@@ -24,8 +24,11 @@ class Funcoes:
             print('Finalizou a clonagem')
 
     @staticmethod
-    def remove_arq(path):
-        path = Funcoes.get_data_path(path)
+    def remove_arq(path, data_path: bool = True):
+
+        if data_path:
+            path = Funcoes.get_data_path(path)
+
         if os.path.exists(path):
             os.remove(path)
 
