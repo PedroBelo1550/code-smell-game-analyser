@@ -104,7 +104,8 @@ class Funcoes:
                     df.to_csv(name)
                     zipf.write(name, f'{nome}.csv')
 
-        shutil.move(name_repo, caminho_downloads)
+        dest_path = os.path.join(caminho_downloads, name_repo)
+        shutil.move(name_repo, dest_path)
 
         return True
     
