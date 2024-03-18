@@ -120,10 +120,11 @@ class Funcoes:
 
     @staticmethod
     def get_repo_name(repo_url: str):
-        c = '/'
-        if sys.platform.startswith('win'):
-            c = '\\'
 
+        c = '/'
+        if os.path.exists(repo_url) and sys.platform.startswith('win'):
+            c = '\\'
+        
         name_repo = repo_url.split(c)
         name_repo = name_repo[len(name_repo)-1].replace('.git', '').replace(c, '')
         return name_repo
