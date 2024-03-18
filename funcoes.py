@@ -99,7 +99,7 @@ class Funcoes:
                     df = pd.DataFrame(smell['Smells'])
                     name = f'{pasta_temporaria}/{nome}.csv'
                     df.to_csv(name)
-                    zipf.write(name)
+                    zipf.write(name, f'{nome}.csv')
 
         shutil.move(name_repo, caminho_downloads)
 
