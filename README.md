@@ -8,6 +8,8 @@ pyinstaller --onefile  --add-data="UnityCodeSmellAnalyzer;UnityCodeSmellAnalyzer
 
 Comando para executar o scanner
 ````cmd
+cd C:\Program Files\sonar-scanner-5.0.1.3006-windows\bin
+
 sonar-scanner.bat -D"sonar.projectKey=game-smells" -D"sonar.sources=C:\Users\vm1\Documents\dev\analise_sonar." -D"sonar.host.url=http://localhost:9000" -D"sonar.token=sqp_07d2a8556245a1c2bace2833d126f862de2e7a73" -D"sonar.projectBaseDir=C:\Users\vm1\Documents\dev\analise_sonar"
 ``
 
