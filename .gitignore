@@ -11,7 +11,8 @@ __pycache__/
 # Arquivo de ambiente virtual (se estiver usando virtualenv ou venv)
 venv/
 env/
-
+.env
+.vs
 # Arquivos de registro
 *.log
 

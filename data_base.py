@@ -1,11 +1,14 @@
+import os
+from dotenv import load_dotenv
 import pyodbc
 
 class DataBase:
     def __init__(self):
-        self.server = 'tcc-db-srv.database.windows.net:1433'
-        self.database = 'tcc-bd'
-        self.username = 'adm'
-        self.password = 'Abc789@#dsfdsf'
+        load_dotenv()
+        self.server = os.getenv("DB_HOST")
+        self.database = os.getenv("DB_DATA_BASE")
+        self.username = os.getenv("DB_USER")
+        self.password = os.getenv("DB_PASSWORD")
         self.driver ='{SQL Server}'
         self.conn = None
         self.cursor = None
@@ -29,12 +32,3 @@ class DataBase:
         self.conn.commit()
         print("Dados inseridos na tabela metricas_qualidade com sucesso.")
 
-# Exemplo de uso da classe
-connector = SQLServerConnector(server='seu_servidor', database='seu_banco_de_dados', username='seu_usuario', password='sua_senha')
-
-connector.connect()
-
-connector.insert_game_smell("001", "Controle de Versão", 5)
-connector.insert_metricas_qualidade("001", 10, 20, 30, 5)
-
-connector.disconnect()

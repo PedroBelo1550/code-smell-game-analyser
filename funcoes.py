@@ -98,8 +98,6 @@ class Funcoes:
             for smell in pd.read_json(json_path)['SmellList']: 
 
                 if smell['Occurrency'] != 0:
-
-                    
                     nome = smell['Name']
                     df = pd.DataFrame(smell['Smells'])
                     name = f'{pasta_temporaria}/{nome}.csv'
