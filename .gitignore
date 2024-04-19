@@ -15,7 +15,7 @@ env/
 .vs
 # Arquivos de registro
 *.log
-
+jogo/
 # Pacotes instalados
 pip-log.txt
 
