@@ -40,5 +40,10 @@ class Blob:
         fim = time.time()
 
         print(f'Download concluido, decorrido: {(fim - inicio) / 60} em minutos')
+
+    def upload_blob_file(self, file_name: str):
+        name_blob = file_name.replace('./jogo/','')
+        with open(file=file_name, mode="rb") as data:
+            blob_client = self.container_client.upload_blob(name=name_blob, data=data, overwrite=True)
           
 

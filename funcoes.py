@@ -1,4 +1,5 @@
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -8,6 +9,7 @@ import unicodedata
 from git import Repo
 import pandas as pd
 
+from blob import Blob
 from sql_server import SQLServerConnector
 
 
@@ -72,6 +74,8 @@ class Funcoes:
     @staticmethod
     def json_para_csv(json_path, id_jogo):
 
+        blob = Blob()
+
         name_repo = f'./jogo/{id_jogo}/Resultados code smells - {id_jogo}.zip'
 
         pasta_temporaria = 'temporaria'
@@ -110,6 +114,8 @@ class Funcoes:
             print('inserindo no sql')
             sql = SQLServerConnector()
             sql.insert_data_from_dataframe(result,'game_smells')
+            print('Fazendo upload dos resultados')
+            blob.upload_blob_file(name_repo)
 
         shutil.rmtree(pasta_temporaria)
 
@@ -117,7 +123,9 @@ class Funcoes:
 
     @staticmethod
     def normalize(string):
-        return unicodedata.normalize('NFKD', string).encode('utf-8', 'ignore').decode('utf-8')
+        padrao = r'[^\w\s-]'  # Remove tudo que não for alfanumérico ou espaço
+        return re.sub(padrao, '', string)
+
 
     @staticmethod
     def get_data_path(relative_path):
