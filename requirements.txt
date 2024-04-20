@@ -6,3 +6,4 @@ azure-storage-blob==12.19.1
 python-dotenv==1.0.1
 azure-identity==1.16.0
 SQLAlchemy~=2.0.29
+pymssql==2.3.0

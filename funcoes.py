@@ -4,6 +4,7 @@ import subprocess
 import sys
 import tempfile
 import zipfile
+import unicodedata
 from git import Repo
 import pandas as pd
 
@@ -99,7 +100,7 @@ class Funcoes:
                     t2 = smell['Occurrency']
 
                     df_temp = {
-                        'id_jogo': id_jogo,
+                        'id_jogo': Funcoes.normalize(id_jogo),
                         'name': smell['Name'],
                         'occurrency': smell['Occurrency'],
                     }
@@ -108,9 +109,9 @@ class Funcoes:
 
                     result = pd.concat([result, df_temp], ignore_index=True)
 
-                    print('inserindo no sql')
-                    sql = SQLServerConnector()
-                    sql.insert_data_from_dataframe(result,'game_smells')
+            print('inserindo no sql')
+            sql = SQLServerConnector()
+            sql.insert_data_from_dataframe(result,'game_smells')
 
 
 
@@ -122,7 +123,11 @@ class Funcoes:
         shutil.rmtree(pasta_temporaria)
 
         return True
-    
+
+    @staticmethod
+    def normalize(string):
+        return unicodedata.normalize('NFKD', string).encode('utf-8', 'ignore').decode('utf-8')
+
     @staticmethod
     def get_data_path(relative_path):
         """Retorna o caminho para um arquivo ou diretório incluído no pacote."""

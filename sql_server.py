@@ -4,7 +4,6 @@ import pandas as pd
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
-
 class SQLServerConnector:
     def __init__(self):
         load_dotenv()
@@ -16,7 +15,7 @@ class SQLServerConnector:
 
     def __connect(self):
         try:
-            conn_str = f"mssql+pymssql://{self.username}:{self.password}@{self.server}/{self.database}"
+            conn_str = f"mssql+pymssql://{self.username}:{self.password}@{self.server}/{self.database}?charset=utf8"
             self.engine = create_engine(conn_str)
             print("Conexão bem sucedida!")
         except Exception as e:
