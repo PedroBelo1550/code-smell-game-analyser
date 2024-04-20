@@ -2,22 +2,18 @@ from funcoes import Funcoes
 
 class Analyser:
 
-    def processar(self, url, id_jogo):
-        repositorio_git = url
+    @staticmethod
+    def processar(id_jogo):
         json_output = 'CodeAnalysis.json'
         json_smell = 'codeSmells.json'
-        repositorio_path = 'repositorio'
         log= 'CSharpAnalyzer.log'
         linter= 'Linter.log'
 
-        Funcoes.remove_folder(repositorio_path)
         Funcoes.remove_arq(json_output)
         Funcoes.remove_arq(json_smell)
         Funcoes.remove_arq(log)
         Funcoes.remove_arq(linter)
 
-        #Clona o repositório: 
-        Funcoes.clona_repositorio(repositorio_git)
 
         #Roda o CSharpAnalyzer, necesária para obter os bad smells. 
         Funcoes.executar_analisador_csharp()
