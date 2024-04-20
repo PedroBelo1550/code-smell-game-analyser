@@ -32,27 +32,17 @@ class Sonar:
             print("Erro ao executar o sonar", e)
 
     @staticmethod
-    def get_estatisticas():
+    def obter_métricas():
 
-        # Endpoint da API para obter métricas de um projeto
-        api_endpoint = f'{Sonar.URL}/api/measures/component'
+        métricas = ['cognitive_complexity', 'duplicated_lines', 'sqale_debt_ratio', 'ncloc', 'bugs']
 
-        # Parâmetros da requisição
+        headers = {'Authorization': f'Token {Sonar.TOKEN}'}
+        endpoint = f'{Sonar.URL}/api/measures/component'
         params = {
-            'component': Sonar.TOKEN,
-            'metricKeys': 'cognitive_complexity,duplicated_lines,sqale_debt_ratio,ncloc,bugs',
-            'additionalFields': 'metrics'
+            'component': Sonar.PROJECT,
+            'metricKeys': ','.join(métricas)
         }
-
-        # Autenticação
-        auth = ('admin', 'admin')
-
-        # Fazendo a requisição à API do SonarQube
-        response = requests.get(api_endpoint, params=params, auth=auth)
-
-        print(response.text)
-
-        # Verificando se a requisição foi bem-sucedida
+        response = requests.get(endpoint, headers=headers, params=params)
         if response.status_code == 200:
             # Convertendo a resposta JSON em um dicionário Python
             data = response.json()
@@ -70,3 +60,4 @@ class Sonar:
             print("Métricas salvas com sucesso em metrics.json")
         else:
             print(f"Erro ao obter métricas: {response.status_code} - {response.text}")
+

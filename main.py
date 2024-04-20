@@ -19,7 +19,7 @@ blob: Blob = Blob()
 #Analyser.processar(id_jogo)
 
 #Sonar.executa_scanne(id_jogo)
-Sonar.get_estatisticas()
+Sonar.obter_métricas()
 
 print('deletando pastas')
 #shutil.rmtree(pasta_jogo)
