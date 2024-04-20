@@ -7,6 +7,9 @@ import zipfile
 from git import Repo
 import pandas as pd
 
+from data_base import SQLServerConnector
+
+
 class Funcoes:
 
     @staticmethod
@@ -80,9 +83,9 @@ class Funcoes:
             print("Erro ao executar o analisador C#:", e)
 
     @staticmethod
-    def json_para_csv(json_path, name_repo):
+    def json_para_csv(json_path, id_jogo):
 
-        name_repo = 'Resultados code smells - ' + name_repo + '.zip'
+        name_repo = 'Resultados code smells - ' + id_jogo + '.zip'
 
         pasta_temporaria = Funcoes.get_data_path('temporaria')
         if os.path.exists(pasta_temporaria):
@@ -91,9 +94,11 @@ class Funcoes:
 
         os.makedirs(pasta_temporaria)
 
-        caminho_downloads = os.path.join(os.path.expanduser('~'), 'Downloads')
+        caminho_downloads = './jogo'
         
         with zipfile.ZipFile(name_repo, 'w') as zipf:
+
+            result = pd.DataFrame()
             
             for smell in pd.read_json(json_path)['SmellList']: 
 
@@ -103,6 +108,23 @@ class Funcoes:
                     name = f'{pasta_temporaria}/{nome}.csv'
                     df.to_csv(name)
                     zipf.write(name, f'{nome}.csv')
+
+                    df_temp = pd.DataFrame({
+                        'id_jogo': id_jogo,
+                        'name': name,
+                        'occurrency': smell['Occurrency'],
+                    })
+
+                    result = pd.concat([result, df_temp])
+
+                    print('inserindo no sql')
+                    sql = SQLServerConnector()
+                    sql.insert_data_from_dataframe(result,'game_smells')
+
+
+
+
+
 
         dest_path = os.path.join(caminho_downloads, name_repo)
         shutil.move(name_repo, dest_path)
