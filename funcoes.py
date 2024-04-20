@@ -76,7 +76,7 @@ class Funcoes:
 
         blob = Blob()
 
-        name_repo = f'./jogo/{id_jogo}/Resultados code smells - {id_jogo}.zip'
+        name_repo = f'./jogo/{id_jogo}/Resultados game smells - {id_jogo}.zip'
 
         pasta_temporaria = 'temporaria'
         if os.path.exists(pasta_temporaria):
