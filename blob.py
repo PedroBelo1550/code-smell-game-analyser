@@ -28,7 +28,7 @@ class Blob:
 
         inicio = time.time()
         blobs_list = self.container_client.list_blobs(name_starts_with=folder_path)
-    
+
         for blob in blobs_list:
             # Crie o caminho do arquivo local
             local_file_path = os.path.join(local_directory, blob.name)
@@ -37,7 +37,6 @@ class Blob:
 
             with open(file=local_file_path, mode="wb") as download_file:
                 download_file.write(self.container_client.download_blob(blob.name).readall())
-
         fim = time.time()
 
         print(f'Download concluido, decorrido: {(fim - inicio) / 60} em minutos')

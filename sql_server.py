@@ -4,6 +4,7 @@ import pandas as pd
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
+
 class SQLServerConnector:
     def __init__(self):
         load_dotenv()
@@ -28,5 +29,3 @@ class SQLServerConnector:
             print("Dados inseridos com sucesso.")
         except Exception as e:
             print("Erro ao inserir dados:", e)
-
-

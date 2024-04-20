@@ -7,24 +7,10 @@ import zipfile
 from git import Repo
 import pandas as pd
 
-from data_base import SQLServerConnector
+from sql_server import SQLServerConnector
 
 
 class Funcoes:
-
-    @staticmethod
-    def clona_repositorio(url):
-
-        destino = Funcoes.get_data_path('repositorio')
-
-        if os.path.exists(url):
-           print('Copiando pasta')
-           shutil.copytree(url,destino)
-        else:
-            os.makedirs(destino)
-            print('Clonando o repositório')
-            Repo.clone_from(url, destino)
-            print('Finalizou a clonagem')
 
     @staticmethod
     def remove_arq(path, data_path: bool = True):
@@ -50,7 +36,7 @@ class Funcoes:
     def executar_analisador_csharp():
         try:
  
-            project_dir_path = Funcoes.get_data_path('repositorio')
+            project_dir_path = Funcoes.get_data_path('jogo')
 
             print(f'Iniciou a análise do CSharpAnalyzer {project_dir_path}')
             # Comando para executar o analisador C# de acordo com o sistema operacional
@@ -87,7 +73,7 @@ class Funcoes:
 
         name_repo = 'Resultados code smells - ' + id_jogo + '.zip'
 
-        pasta_temporaria = Funcoes.get_data_path('temporaria')
+        pasta_temporaria = 'temporaria'
         if os.path.exists(pasta_temporaria):
             # Deletar o repositório existente
             shutil.rmtree(pasta_temporaria)
@@ -109,13 +95,18 @@ class Funcoes:
                     df.to_csv(name)
                     zipf.write(name, f'{nome}.csv')
 
-                    df_temp = pd.DataFrame({
-                        'id_jogo': id_jogo,
-                        'name': name,
-                        'occurrency': smell['Occurrency'],
-                    })
+                    t = smell['Name']
+                    t2 = smell['Occurrency']
 
-                    result = pd.concat([result, df_temp])
+                    df_temp = {
+                        'id_jogo': id_jogo,
+                        'name': smell['Name'],
+                        'occurrency': smell['Occurrency'],
+                    }
+
+                    df_temp = pd.DataFrame(df_temp, index=[0])
+
+                    result = pd.concat([result, df_temp], ignore_index=True)
 
                     print('inserindo no sql')
                     sql = SQLServerConnector()
@@ -135,11 +126,7 @@ class Funcoes:
     @staticmethod
     def get_data_path(relative_path):
         """Retorna o caminho para um arquivo ou diretório incluído no pacote."""
-        try:
-            base_path = sys._MEIPASS
-        except AttributeError:
-            base_path = os.path.abspath(".")
-        return os.path.join(base_path, relative_path)
+        return relative_path
 
     @staticmethod
     def get_repo_name(repo_url: str):
