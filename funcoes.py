@@ -72,7 +72,7 @@ class Funcoes:
     @staticmethod
     def json_para_csv(json_path, id_jogo):
 
-        name_repo = './id_jogo/Resultados code smells - ' + id_jogo + '.zip'
+        name_repo = f'./jogo/{id_jogo}/Resultados code smells - {id_jogo}.zip'
 
         pasta_temporaria = 'temporaria'
         if os.path.exists(pasta_temporaria):
@@ -81,8 +81,6 @@ class Funcoes:
 
         os.makedirs(pasta_temporaria)
 
-        caminho_downloads = './jogo'
-        
         with zipfile.ZipFile(name_repo, 'w') as zipf:
 
             result = pd.DataFrame()
@@ -113,13 +111,6 @@ class Funcoes:
             sql = SQLServerConnector()
             sql.insert_data_from_dataframe(result,'game_smells')
 
-
-
-
-
-
-        dest_path = os.path.join(caminho_downloads, name_repo)
-        shutil.move(name_repo, dest_path)
         shutil.rmtree(pasta_temporaria)
 
         return True
