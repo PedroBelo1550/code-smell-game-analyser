@@ -72,7 +72,7 @@ class Funcoes:
     @staticmethod
     def json_para_csv(json_path, id_jogo):
 
-        name_repo = 'Resultados code smells - ' + id_jogo + '.zip'
+        name_repo = './id_jogo/Resultados code smells - ' + id_jogo + '.zip'
 
         pasta_temporaria = 'temporaria'
         if os.path.exists(pasta_temporaria):
