@@ -18,5 +18,5 @@ blob.download_folder(id_jogo, pasta_jogo)
 Analyser.processar(id_jogo)
 
 print('deletando pastas')
-shutil.rmtree(pasta_jogo)
-os.makedirs(pasta_jogo)
+#shutil.rmtree(pasta_jogo)
+#os.makedirs(pasta_jogo)
