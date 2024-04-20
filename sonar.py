@@ -5,32 +5,31 @@ import json
 
 
 class Sonar:
-
     URL = 'http://localhost:9000'
     TOKEN = 'sqp_07d2a8556245a1c2bace2833d126f862de2e7a73'
     PROJECT = 'game-smells'
 
     @staticmethod
-    def executa_scanne():
-            try:
+    def executa_scanne(jogo):
+        try:
 
-                comando = None
+            comando = None
 
-                print(f'Iniciou a análise do Sonar {project_dir_path}')
-                # Comando para executar o analisador C# de acordo com o sistema operacional
-                if sys.platform.startswith('win'):
-                    comando = ["C:\Program Files\sonar-scanner-5.0.1.3006-windows\bin\sonar-scanner.bat",
-                               "-D", f"sonar.projectKey={Sonar.PROJECT}", "-D",
-                               "sonar.sources=C:\Users\vm1\Documents\dev\code-smell-game-analyser.",
-                               "-D", f"sonar.host.url={Sonar.URL}", "-D",
-                               f"sonar.token={Sonar.TOKEN}", "-D",
-                               "sonar.projectBaseDir=C:\Users\vm1\Documents\dev\jogo"]
+            print(f'Iniciou a análise do Sonar para o jogo {jogo}')
+            # Comando para executar o analisador C# de acordo com o sistema operacional
+            if sys.platform.startswith('win'):
+                comando = ["C:\\Program Files\\sonar-scanner-5.0.1.3006-windows\\bin\\sonar-scanner.bat",
+                           "-D", f"sonar.projectKey={Sonar.PROJECT}", "-D",
+                           'sonar.sources=C:\\Users\\vm1\\Documents\\dev\\code-smell-game-analyser\\jogo.',
+                           "-D", f"sonar.host.url={Sonar.URL}", "-D",
+                           f"sonar.token={Sonar.TOKEN}", "-D",
+                           "sonar.projectBaseDir=C:\\Users\\vm1\\Documents\\dev\\code-smell-game-analyser\\jogo"]
 
-                # Executa o comando
-                subprocess.run(comando, check=True)
-                print("Análise do sonar concluída:", project_dir_path)
-            except subprocess.CalledProcessError as e:
-                print("Erro ao executar o sonar", e)
+            # Executa o comando
+            subprocess.run(comando, check=True)
+            print("Análise do sonar concluída:")
+        except subprocess.CalledProcessError as e:
+            print("Erro ao executar o sonar", e)
 
     @staticmethod
     def get_estatisticas():
@@ -51,6 +50,8 @@ class Sonar:
         # Fazendo a requisição à API do SonarQube
         response = requests.get(api_endpoint, params=params, auth=auth)
 
+        print(response.text)
+
         # Verificando se a requisição foi bem-sucedida
         if response.status_code == 200:
             # Convertendo a resposta JSON em um dicionário Python
@@ -69,4 +70,3 @@ class Sonar:
             print("Métricas salvas com sucesso em metrics.json")
         else:
             print(f"Erro ao obter métricas: {response.status_code} - {response.text}")
-
