@@ -3,7 +3,7 @@ from funcoes import Funcoes
 class Analyser:
 
     @staticmethod
-    def processar(id_jogo):
+    def processar(id_jogo, destino):
         json_output = 'CodeAnalysis.json'
         json_smell = 'codeSmells.json'
         log= 'CSharpAnalyzer.log'
@@ -16,7 +16,7 @@ class Analyser:
 
 
         #Roda o CSharpAnalyzer, necesária para obter os bad smells. 
-        Funcoes.executar_analisador_csharp()
+        Funcoes.executar_analisador_csharp(destino)
         Funcoes.executar_analisador_code_smell(json_output)
         Funcoes.json_para_csv(json_smell, id_jogo)
 

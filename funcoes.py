@@ -36,10 +36,10 @@ class Funcoes:
         return tempfile.mkdtemp()
     
     @staticmethod
-    def executar_analisador_csharp():
+    def executar_analisador_csharp(destino):
         try:
  
-            project_dir_path = Funcoes.get_data_path('jogo')
+            project_dir_path = destino
 
             print(f'Iniciou a análise do CSharpAnalyzer {project_dir_path}')
             # Comando para executar o analisador C# de acordo com o sistema operacional
@@ -76,7 +76,7 @@ class Funcoes:
 
         blob = Blob()
 
-        name_repo = f'./jogo/{id_jogo}/Resultados game smells - {id_jogo}.zip'
+        name_repo = f'./jogo/Resultados game smells - {id_jogo}.zip'
 
         pasta_temporaria = 'temporaria'
         if os.path.exists(pasta_temporaria):

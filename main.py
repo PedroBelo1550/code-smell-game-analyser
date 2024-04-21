@@ -2,25 +2,30 @@ import os
 import shutil
 
 from analyser import Analyser
-from blob import Blob
 from sonar import Sonar
 
 id_jogo = '13º signo - 2º período - 2-2016'
-pasta_jogo = './jogo'
+pasta_projeto = 'C:\\Users\\vm1\\Documents\\dev\\analise_sonar'
+origem = 'E:\\jogos'
 
-#if os.path.exists(pasta_jogo):
-#    shutil.rmtree(pasta_jogo)
-#    os.makedirs(pasta_jogo)
+if os.path.exists(pasta_projeto):
+    shutil.rmtree(pasta_projeto)
+    os.makedirs(pasta_projeto)
+else:
+    os.makedirs(pasta_projeto)
 
-blob: Blob = Blob()
+print('copiando os dados')
+origem = os.path.join(origem, id_jogo)
+destino = os.path.join(pasta_projeto, id_jogo)
+#Copia os dados
+shutil.copytree(origem, destino)
 
-#blob.download_folder(id_jogo, pasta_jogo)
-
-#Analyser.processar(id_jogo)
-
-#Sonar.executa_scanne(id_jogo)
+#Analyser.processar(id_jogo, destino)
+Sonar.executa_scanne(id_jogo)
 Sonar.obter_métricas(id_jogo)
 
 print('deletando pastas')
-#shutil.rmtree(pasta_jogo)
-#os.makedirs(pasta_jogo)
+shutil.rmtree(destino)
+shutil.rmtree(pasta_projeto)
+shutil.rmtree('./jogo')
+os.makedirs(destino)
