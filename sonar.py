@@ -61,13 +61,10 @@ class Sonar:
 
             db = SQLServerConnector()
 
-            pd =
+            df = pd.DataFrame(metrics_dict, index=[0])
 
-            db.insert_data_from_dataframe()
-
-
-
-            print("Métricas salvas com sucesso em metrics.json")
+            db.insert_data_from_dataframe(df,'metricas_sonar')
+            print("Métricas salvas com sucesso no banco de dados")
         else:
             print(f"Erro ao obter métricas: {response.status_code} - {response.text}")
 
