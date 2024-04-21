@@ -25,6 +25,8 @@ services:
       - postgresql_data:/var/lib/postgresql/data
  nginx:
     image: nginx:latest
+    depends_on:
+      - sonarqube
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     ports:

@@ -5,7 +5,7 @@ from analyser import Analyser
 from blob import Blob
 from sonar import Sonar
 
-id_jogo = 'a perdição de marajó - 2º período - 2-2017'
+id_jogo = '13º signo - 2º período - 2-2016'
 pasta_jogo = './jogo'
 
 #if os.path.exists(pasta_jogo):
@@ -19,7 +19,7 @@ blob: Blob = Blob()
 #Analyser.processar(id_jogo)
 
 #Sonar.executa_scanne(id_jogo)
-Sonar.obter_métricas()
+Sonar.obter_métricas(id_jogo)
 
 print('deletando pastas')
 #shutil.rmtree(pasta_jogo)
