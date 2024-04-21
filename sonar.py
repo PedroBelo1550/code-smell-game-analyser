@@ -6,7 +6,7 @@ import json
 
 class Sonar:
     URL = 'http://localhost:9000'
-    TOKEN = 'sqp_07d2a8556245a1c2bace2833d126f862de2e7a73'
+    TOKEN = 'sqa_e3322c2ac0728885c969a0d17fcd4dee88308d73'
     PROJECT = 'game-smells'
 
     @staticmethod
