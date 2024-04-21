@@ -3,8 +3,10 @@ import subprocess
 import sys
 import requests
 import json
+import pandas as pd
 
 from funcoes import Funcoes
+from sql_server import SQLServerConnector
 
 
 class Sonar:
@@ -56,6 +58,14 @@ class Sonar:
             metrics_dict = {metric['metric']: metric['value'] for metric in metrics}
 
             metrics_dict['id_jogo'] = Funcoes.normalize(id_jogo)
+
+            db = SQLServerConnector()
+
+            pd =
+
+            db.insert_data_from_dataframe()
+
+
 
             print("Métricas salvas com sucesso em metrics.json")
         else:
