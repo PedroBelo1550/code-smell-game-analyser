@@ -6,7 +6,7 @@ import json
 
 class Sonar:
     URL = 'http://localhost:9000'
-    TOKEN = 'sqa_e3322c2ac0728885c969a0d17fcd4dee88308d73'
+    TOKEN = 'sqp_9478adbcce8083bd469fabe344918cc00d2f2e05'
     PROJECT = 'game-smells'
 
     @staticmethod
@@ -36,7 +36,7 @@ class Sonar:
 
         métricas = ['cognitive_complexity', 'duplicated_lines', 'sqale_debt_ratio', 'ncloc', 'bugs']
 
-        headers = {'Authorization': f'Token {Sonar.TOKEN}'}
+        headers = {'Authorization': f'Bearer {Sonar.TOKEN}'}
         endpoint = f'{Sonar.URL}/api/measures/component'
         params = {
             'component': Sonar.PROJECT,
