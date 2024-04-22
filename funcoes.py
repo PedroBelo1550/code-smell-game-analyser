@@ -98,9 +98,6 @@ class Funcoes:
                     df.to_csv(name)
                     zipf.write(name, f'{nome}.csv')
 
-                    t = smell['Name']
-                    t2 = smell['Occurrency']
-
                     df_temp = {
                         'id_jogo': Funcoes.normalize(id_jogo),
                         'name': smell['Name'],
@@ -110,6 +107,8 @@ class Funcoes:
                     df_temp = pd.DataFrame(df_temp, index=[0])
 
                     result = pd.concat([result, df_temp], ignore_index=True)
+
+            zipf.close()
 
             print('inserindo no sql')
             sql = SQLServerConnector()

@@ -10,17 +10,16 @@ nome_arq = 'Catalogação.csv'
 df = pd.read_csv(nome_arq)
 
 for index, row in df.iterrows():
-    print(row['pasta'])
+
 
     try:
         if not row['processado']:
-            id_jogo = str(row['pasta'])
+            print(row['pasta'])
+            id_jogo = str(row['pasta']).encode('utf8').decode('utf8')
             pasta_projeto = 'C:\\Users\\vm1\\Documents\\dev\\analise_sonar'
             origem = 'E:\\jogos'
 
             Funcoes.remove_folder(pasta_projeto)
-            Funcoes.remove_folder('./jogo')
-            os.makedirs('./jogo')
             os.makedirs(pasta_projeto)
 
             print('copiando os dados')
@@ -40,3 +39,7 @@ for index, row in df.iterrows():
 
     df.at[index, 'processado'] = True
     df.to_csv(nome_arq, index=False)
+
+
+    # alegoria - 3º período - 1-2017
+    # alegoria - 3º período - 1-2017

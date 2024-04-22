@@ -1,54 +1,20 @@
-import pandas as pd
 import os
-import shutil
-from sonar import Sonar
+import re
 
-nome_arq = 'Catalogação.csv'
-df = pd.read_csv(nome_arq, delimiter=';')
+def remove_special_chars(folder_path):
+    # Percorre todas as pastas dentro da pasta especificada
+    for root, dirs, files in os.walk(folder_path):
+        for name in dirs:
+            # Cria um novo nome removendo caracteres especiais
+            new_name = re.sub(r'[^\w\s-]|º', '', name)
+            new_name = re.sub(r'\s+', ' ', new_name)
+            new_name = re.sub('_', ' ', new_name)# Substitui espaços por underscores
+            # Caminho completo da pasta original
+            old_path = os.path.join(root, name)
+            # Caminho completo da nova pasta
+            new_path = os.path.join(root, new_name)
+            # Renomeia a pasta original para o novo nome
+            os.rename(old_path, new_path)
 
-for index, row in df.iterrows():
-    print(row['pasta'])
-    try:
-
-        id_jogo = row['pasta']
-        pasta_projeto = 'C:\\Users\\vm1\\Documents\\dev\\analise_sonar'
-        origem = 'E:\\jogos'
-
-        if os.path.exists(pasta_projeto):
-            shutil.rmtree(pasta_projeto)
-            os.makedirs(pasta_projeto)
-        else:
-            os.makedirs(pasta_projeto)
-
-        print('copiando os dados')
-        origem = os.path.join(origem, id_jogo)
-        destino = os.path.join(pasta_projeto, id_jogo)
-        # Copia os dados
-        shutil.copytree(origem, destino)
-
-        # Analyser.processar(id_jogo, destino)
-        Sonar.executa_scanne(id_jogo)
-        Sonar.obter_métricas(id_jogo)
-
-        print('deletando pastas')
-        shutil.rmtree(destino)
-        shutil.rmtree(pasta_projeto)
-        shutil.rmtree('./jogo')
-        os.makedirs(destino)
-
-        df.at[index, 'processado'] = True
-        df.to_csv(nome_arq, index=False)
-
-    except Exception as e:
-        shutil.rmtree(destino)
-        shutil.rmtree(pasta_projeto)
-        shutil.rmtree('./jogo')
-        os.makedirs(destino)
-        # Se ocorrer um erro, imprimir mensagem de erro e pular para a próxima iteração
-        print(f"Erro ao processar a linha {index}: {e}")
-        continue
-
-
-
-
-
+# Substitua 'caminho_da_pasta' pelo caminho da pasta que você deseja modificar
+remove_special_chars('E:\\jogos')
