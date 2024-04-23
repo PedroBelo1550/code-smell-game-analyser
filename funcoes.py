@@ -111,8 +111,8 @@ class Funcoes:
             zipf.close()
 
             print('inserindo no sql')
-            sql = SQLServerConnector()
-            sql.insert_data_from_dataframe(result,'game_smells')
+            #sql = SQLServerConnector()
+            #sql.insert_data_from_dataframe(result,'game_smells')
             print('Fazendo upload dos resultados')
             blob.upload_blob_file(name_repo)
 

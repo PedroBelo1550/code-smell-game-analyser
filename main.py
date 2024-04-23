@@ -28,9 +28,9 @@ for index, row in df.iterrows():
             # Copia os dados
             shutil.copytree(origem, destino)
 
-            Analyser.processar(id_jogo, destino)
+            #Analyser.processar(id_jogo, destino)
             Sonar.executa_scanne(id_jogo)
-            Sonar.obter_métricas(id_jogo)
+            #Sonar.obter_métricas(id_jogo)
 
     except Exception as e:
         # Se ocorrer um erro, imprimir mensagem de erro e pular para a próxima iteração
