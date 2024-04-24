@@ -1,9 +1,38 @@
 import os
+import shutil
 import subprocess
+import time
 import xml.etree.ElementTree as ET
 import uuid
 import pandas as pd
 from io import StringIO
+import pexpect
+from sql_server import SQLServerConnector
+import asyncio
+import yaml
+
+
+async def run_scan():
+    # Comando a ser executado
+    command = 'qodana scan'
+
+    # Inicia o processo
+    process = await asyncio.create_subprocess_shell(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    # Lê a saída do processo linha por linha
+    while True:
+        line = await process.stdout.readline()
+        if line:
+            # Imprime a linha (opcional)
+            print(line.decode().strip())
+
+            # Se a linha contém a pergunta, envia a resposta 'n'
+            if "?  Do you want to open . [Y/n]" in line.decode():
+                process.stdin.write(b'n\n')
+                process.stdin.close()
+                break  # Sai do loop quando a resposta é enviada
+        else:
+            break
 
 def generate_csproj(project_dir, project_name, files):
     # Cria o elemento raiz do arquivo .csproj
@@ -32,21 +61,29 @@ def generate_csproj(project_dir, project_name, files):
     csproj_path = os.path.join(project_dir, f'analise.csproj')
     tree.write(csproj_path, encoding="utf-8", xml_declaration=True)
 
+def escrever_arquivo_yaml(caminho):
 
-# Lista de diretórios dos projetos C#
-project_directories = [
-    'C:\\Users\\vm1\\Documents\\dev\\analise_sonar\\',
-    # Adicione mais diretórios conforme necessário
-]
+        caminho = os.path.join(caminho, 'qodana.yaml')
 
-# Caminho para o SonarScanner para MSBuild
-sonar_scanner_path = 'sonarscanner'
+        dados_yaml = {
+            'version': "1.0",
+            'linter': "jetbrains/qodana-cdnet",
+            'dotnet': {
+                'project': "analise.csproj"
+            }
+        }
 
-# Configurações do SonarQube
-sonar_project_key = 'teste'
-sonar_token = 'sqp_f4c7a707397b72587b3a89aba29dd00384254dc0'
+        # Abre o arquivo no modo de escrita
+        with open(caminho, 'w') as arquivo:
+            # Escreve os dados no arquivo YAML
+            yaml.dump(dados_yaml, arquivo, default_flow_style=False)
+        print(f"Arquivo YAML criado com sucesso em '{caminho}'")
 
-for project_dir in project_directories:
+
+def get_cloc(id_jogo):
+
+    project_dir = os.path.join('E:\\jogos\\', id_jogo)
+
     # Obter todos os arquivos .cs no diretório do projeto
     cs_files = []
 
@@ -60,13 +97,14 @@ for project_dir in project_directories:
     project_name = os.path.basename(project_dir)
     generate_csproj(project_dir, project_name, cs_files)
 
+    # Copia o arquivo de configuracao do linter
+    escrever_arquivo_yaml(project_dir)
+
     # Navegue até o diretório do projeto
     os.chdir(project_dir)
 
-    # Inicie a análise do SonarQube
-    subprocess.run([
-        'qodana', 'scan'
-    ])
+    # Inicia o processo
+    asyncio.run(run_scan())
 
     # Execute o comando qodana cloc e capture a saída
     result = subprocess.run(['qodana', 'cloc', '-o=csv'], capture_output=True, text=True)
@@ -76,8 +114,18 @@ for project_dir in project_directories:
         csv_output = StringIO(result.stdout)
 
         # Leia os dados CSV usando o Pandas
-        df = pd.read_csv(csv_output)
+        df = pd.read_csv(csv_output, header=0)
         # Exiba o DataFrame
         print(df)
 
-    result = subprocess.run(['qodana', 'view', '-f="./qodana.sarif.json"'], capture_output=True, text=True)
+        df = df[df['Language'] == 'C#']
+        df['id_jogo'] = id_jogo
+
+        db = SQLServerConnector()
+        db.insert_data_from_dataframe(df, 'cloc')
+    
+    os.chdir('C:\\Users\\vm1\\Documents\\dev\\code-smell-game-analyser')
+    
+
+        
+

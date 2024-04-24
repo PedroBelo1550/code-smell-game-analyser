@@ -4,6 +4,7 @@ import pandas as pd
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
+
 class SQLServerConnector:
     def __init__(self):
         load_dotenv()
@@ -21,7 +22,7 @@ class SQLServerConnector:
         except Exception as e:
             print("Erro ao conectar ao banco de dados:", e)
 
-    def insert_data_from_dataframe(self, dataframe, table_name):
+    def insert_data_from_dataframe(self, dataframe: pd.DataFrame(), table_name):
         try:
             self.__connect()
             dataframe.to_sql(name=table_name, con=self.engine, if_exists='append', index=False)
