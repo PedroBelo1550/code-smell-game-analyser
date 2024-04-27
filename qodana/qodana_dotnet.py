@@ -113,8 +113,16 @@ def get_cloc(id_jogo):
     if result.returncode == 0:
         csv_output = StringIO(result.stdout)
 
+        lines = csv_output.readlines()
+
+        # Remova a linha que contém a mensagem indesejada
+        lines = [line.replace('!  New version of qodana CLI is available: v2024.1.2. See https://jb.gg/qodana-cli/update', '') for line in lines]
+
+        # Concatene as linhas para formar uma única string
+        csv_content = ''.join(lines)
+
         # Leia os dados CSV usando o Pandas
-        df = pd.read_csv(csv_output, header=0)
+        df = pd.read_csv(StringIO(csv_content), header=0)
         # Exiba o DataFrame
         print(df)
 

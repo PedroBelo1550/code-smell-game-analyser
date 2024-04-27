@@ -45,5 +45,7 @@ class Blob:
         name_blob = file_name.replace('./jogo/','')
         with open(file=file_name, mode="rb") as data:
             blob_client = self.container_client.upload_blob(name=name_blob, data=data, overwrite=True)
+        
+        print('finalizou o upload para o blob')
           
 
