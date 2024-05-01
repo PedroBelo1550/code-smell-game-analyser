@@ -3,7 +3,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Crie um DataFrame com seus dados
-data = pd.read_excel('.\\graficos\\data.xlsx')
+data = pd.read_excel('./graficos/data.xlsx')
 
 df = data[['periodo', 'Complexity', 'Code', 'Game Smells']]
 

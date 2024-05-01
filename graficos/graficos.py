@@ -8,7 +8,7 @@ df = pd.read_excel('graficos/data.xlsx', sheet_name='Export')
 
 dependente = 'Game Smells'
 
-independente = 'periodo'
+independente = 'Code'
 
 # Calculando a mediana da complexidade por período
 mediana_complexidade_por_periodo = df.groupby(independente)[dependente].median()
