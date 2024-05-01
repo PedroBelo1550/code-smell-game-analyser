@@ -1,7 +1,7 @@
 pasta,processado
 aroana - 4 periodo - 2-2018,True
 canbatte - 2 periodo - 2-2016,True
-corrida real - 2 periodo - 2-2016,True
+corrida real - 2 periodo - 2-2016,False
 alegoria - 3 periodo - 1-2017,True
 all city - 3 periodo - 1-2017,True
 altamira 2 - 2 periodo - 2-2015,True
@@ -99,11 +99,11 @@ last tower - 5 periodo - 1-2018,True
 legend of bran - 4 periodo - 1-2015,True
 as lendas de thorn - 3 periodo - 1-2014,True
 a lenda de taria - 3 periodo - 1-2017,True
-magic heist - 4 periodo - 1-2018,False
+magic heist - 4 periodo - 1-2018,True
 magic heist - 3 periodo - 2-2017,True
 uaimipora - 4 periodo - 1-2019,True
 magnefusion - 5 periodo - 1-2018,True
-mestre do ritmo - 2 periodo - 1-2018,False
+mestre do ritmo - 2 periodo - 1-2018,True
 luthium - 2 periodo - 2-2018,True
 lumus - 2 periodo - 2-2019,True
 cristal monstro - 2 periodo - 2-2014,True
@@ -144,7 +144,7 @@ pato mania - 4 periodo - 1-2018,True
 generic robot shooter - 3 periodo - 1-2018,True
 ness - 4 periodo - 2-2016,True
 relicario - 5 periodo - 1-2016,True
-relicario - 6 periodo - 2-2016,False
+relicario - 6 periodo - 2-2016,True
 brega e chick - 2 periodo - 2-2015,True
 o reino de qin - 5 periodo - 2-2017,True
 rapsodia - 6 periodo - 2-2016,True
@@ -165,7 +165,7 @@ lepus - 2 periodo - 2-2014,True
 rustn - 5 periodo - 1-2018,True
 rustn - 6 periodo - 2-2018,True
 run humans run - 2 periodo - 2-2016,True
-shadowcrawlers - 5 periodo - 1-2015,False
+shadowcrawlers - 5 periodo - 1-2015,True
 o cronfronto - 2 periodo - 1-2017,True
 smash goblin - 5 periodo - 2-2019,True
 forja divina - 3 periodo - 2-2018,True
@@ -195,10 +195,10 @@ veganimal - 2 periodo - 2-2019,True
 vendetta - 3 periodo - 1-2015,True
 cardio - 3 periodo - 1-2018,True
 os filhos de miled - 2 periodo - 1-2016,True
-zon - 4 periodo - 2-2015,False
+zon - 4 periodo - 2-2015,True
 wtfusion defense - 2 periodo - 2-2019,True
 wigeers - 5 periodo - 1-2018,True
-wells - 6 periodo - 2-2015,False
+wells - 6 periodo - 2-2015,True
 wells - 5 periodo - 1-2015,True
 warportal - 6 periodo - 1-2018,True
 vorazes e furiosos - 3 periodo - 1-2016,True
