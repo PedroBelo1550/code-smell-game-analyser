@@ -4,11 +4,12 @@ import matplotlib.pyplot as plt
 from scipy.stats import linregress
 from scipy.stats import spearmanr
 from scipy.stats import kruskal
+from scipy.stats import shapiro
 
 df = pd.read_excel('graficos/data.xlsx', sheet_name='Export')
 
 dependente = 'periodo'
-independente = 'Code'
+independente = 'Game Smells'
 
 # Calculando a mediana da complexidade por período
 mediana_complexidade_por_periodo = df.groupby(independente)[dependente].median()
@@ -37,3 +38,12 @@ if p_value_kruskal < alpha:
     print(f"As medianas são estatisticamente diferentes (Rejeitamos a hipótese nula) - Resultado: {p_value_kruskal}")
 else:
     print(f"As medianas não são estatisticamente diferentes (Falhamos em rejeitar a hipótese nula) - Resultado: {p_value_kruskal}")
+
+
+stat, p_value_shapiro = shapiro(df[dependente])
+print(f'Teste de Shapiro-Wilk: Estatística={stat}, p-valor={p_value_shapiro}')
+
+if p_value_shapiro < alpha:
+    print("Os dados não seguem uma distribuição normal (Rejeitamos a hipótese nula)")
+else:
+    print("Os dados seguem uma distribuição normal (Falhamos em rejeitar a hipótese nula)")
